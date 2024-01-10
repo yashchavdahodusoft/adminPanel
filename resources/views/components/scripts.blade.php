@@ -1,28 +1,36 @@
 <div>
     <!-- plugins:js -->
-    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-    <script src="vendors/chart.js/Chart.min.js"></script>
-    <script src="vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <script src="vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('vendors/progressbar.js/progressbar.min.js') }}"></script>
 
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <script src="js/off-canvas.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
-    <script src="js/template.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/todolist.js"></script>
+    <script src="{{ asset('js/off-canvas.js') }}"></script>
+    <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('js/template.js') }}"></script>
+    <script src="{{ asset('js/settings.js') }}"></script>
+    <script src="{{ asset('js/todolist.js') }}"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
-    <script src="js/dashboard.js"></script>
-    <script src="js/Chart.roundedBarCharts.js"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/Chart.roundedBarCharts.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js"></script>
+
     <script type="text/javascript">
-        var notyf = new Notyf();
+        var notyf = new Notyf({
+            duration: '3000',
+            position: {
+                x: 'right',
+                y: 'top'
+            }
+        });
+
         $("document").ready(function() {
             setTimeout(function() {
                 $("div.alert").remove();
@@ -69,6 +77,7 @@
 
         function createRecord(btn) {
             var url = btn.dataset.url;
+
             $.ajax({
                 url: url,
                 dataType: 'html',
@@ -84,16 +93,20 @@
             $.ajax({
                 url: url,
                 type: 'POST',
-                data: $('#saveForm').serialize(),
+                data: new FormData($('#saveForm')[0]),
                 dataType: 'JSON',
                 async: false,
                 cache: false,
+                contentType: false,
+                processData: false,
                 success: function(response) {
                     if (response.status === "success") {
                         notyf.success(response.message);
                         $('#saveForm').trigger("reset");
                         $('#createModal').modal('hide');
                         getCurrentPageData();
+                    } else if (response.status === 'error') {
+                        notyf.error(response.message);
                     }
                 }
             });
@@ -115,17 +128,21 @@
             url = btn.dataset.url;
             $.ajax({
                 url: url,
-                type: 'PUT',
-                data: $('#editForm').serialize(),
+                type: 'POST',
+                data: new FormData($('#editForm')[0]),
                 dataType: 'JSON',
                 async: false,
                 cache: false,
+                contentType: false,
+                processData: false,
                 success: function(response) {
                     if (response.status === "success") {
                         notyf.success(response.message);
                         $('#editForm').trigger("reset");
                         $('#editModal').modal('hide');
                         getCurrentPageData();
+                    } else if (response.status === 'error') {
+                        notyf.error(response.message);
                     }
                 }
             });
@@ -146,12 +163,24 @@
                     success: function(response) {
                         if (response.status === "success") {
                             notyf.success(response.message);
-                            getCurrentPageData();
+                        } else if (response.status === 'error') {
+                            notyf.error(response.message);
                         }
+                        getCurrentPageData();
                     }
                 });
             }
         }
+
+        function getSubCategories(catid) {
+            $.ajax({
+                url: 'sub-category/getSubCategoryByCategoryId/' + catid,
+                type: 'GET',
+                dataType: 'html',
+                success: function(response) {
+                    $('#sub_category_id').html(response);
+                }
+            });
+        }
     </script>
-    <!-- End custom js for this page-->
 </div>

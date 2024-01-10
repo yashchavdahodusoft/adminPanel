@@ -22,10 +22,11 @@ class AuthController extends Controller
         if(Auth::guard('admin')->attempt($data)){
             $request->session()->regenerate();
             session()->flash('message','You have successfully logged in!');
-            return redirect()->route('dashboard');
-                
+            return redirect()->route('dashboard');       
+        }else{
+            return back()->withErrors(['email'=>'Credentials does not match to our records!'])->onlyInput('email');
         }
-        return back()->withErrors(['email'=>'Credentials does not match to our records!'])->onlyInput('email');
+        
     }
     public function logout(){
         if(Auth::guard('admin')->check()){

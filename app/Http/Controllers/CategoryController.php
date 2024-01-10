@@ -78,16 +78,26 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if($category->delete()){
-            return response()->json([
-                'status'=>'success',
-                'message'=>'Category Deleted Successfully!'
-            ]);
-        }else{
+        $posts_count  = $category->posts()->count();
+        $sub_cat_count = $category->subCategories()->count();
+        if($posts_count>0 || $sub_cat_count>0){
             return response()->json([
                 'status'=>'error',
-                'message'=>'Error! Some problem has occurred'
+                'message'=>'Total ' . $posts_count . ' Posts found connected to this Category.<br/> Total '.$sub_cat_count.' Sub Catgories found connected to this Category. <br/> Can not remove this Category'
             ]);
+        }else{
+            if($category->delete()){
+                return response()->json([
+                    'status'=>'success',
+                    'message'=>'Category Deleted Successfully!'
+                ]);
+            }else{
+                return response()->json([
+                    'status'=>'error',
+                    'message'=>'Error! Some problem has occurred'
+                ]);
+            }
         }
+        
     }
 }

@@ -19,8 +19,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
         ]);
 
-        \App\Models\Category::factory(30)->create()->each(function($category){
-            \App\Models\SubCategory::factory(10)->create(['category_id'=>$category]);
+        \App\Models\Category::factory(15)->create()->each(function($category){
+            \App\Models\SubCategory::factory(10)->create(['category_id'=>$category])->each(function($sub_category) use ($category){
+                $numbers = random_int(3,5);
+                \App\Models\Post::factory($numbers)->create(['category_id'=>$category,'sub_category_id'=>$sub_category]);
+            });
         });
     }
 }

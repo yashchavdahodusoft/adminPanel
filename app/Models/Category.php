@@ -13,4 +13,8 @@ class Category extends Model
     public function subCategories():HasMany{
         return $this->hasMany(SubCategory::class);
     }
+
+    public function posts():HasMany{
+        return $this->hasMany(Post::class);
+    }
 }

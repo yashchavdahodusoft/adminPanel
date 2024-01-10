@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<x-head></x-head>
+<x-head>
+    <style>
+        .ck.ck-content {
+            height: 50vh;
+        }
+
+        .ck-balloon-panel {
+            z-index: 9999 !important
+        }
+    </style>
+</x-head>
 
 <body>
     <div class="container-scroller">

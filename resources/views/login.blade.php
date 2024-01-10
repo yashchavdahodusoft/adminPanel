@@ -22,10 +22,14 @@
                                 <div class="form-group">
                                     <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1"
                                         placeholder="Username">
+                                        @error('email')
+                                            <span style="color:red">{{$message}}</span>
+                                        @enderror
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" class="form-control form-control-lg"
                                         id="exampleInputPassword1" placeholder="Password">
+                                        
                                 </div>
                                 <div class="my-2 d-flex justify-content-between align-items-center">
                                     <div class="form-check">

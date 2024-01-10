@@ -68,14 +68,14 @@ class SubCategoryController extends Controller
     public function update(Request $request, SubCategory $sub_category)
     {
         $data = $request->validate([
-            'name'=>'required|max:255',
+            'name' => 'required|max:255',
             'category_id' => 'required|integer'
         ]);
-        
+
         $sub_category->update($data);
         return response()->json([
-            'status'=>'success',
-            'message'=>'Sub Category Updated Successfully!'
+            'status' => 'success',
+            'message' => 'Sub Category Updated Successfully!'
         ]);
     }
 
@@ -84,16 +84,33 @@ class SubCategoryController extends Controller
      */
     public function destroy(SubCategory $sub_category)
     {
-        if($sub_category->delete()){
+        $posts_count = $sub_category->posts()->count();
+        if ($posts_count > 0) {
+
             return response()->json([
-                'status'=>'success',
-                'message'=>'Sub Category Deleted Successfully!'
+                'status' => 'error',
+                'message' => 'Total ' . $posts_count . ' Posts found connected to this sub category <br/>Can not remove this Sub Category'
             ]);
-        }else{
-            return response()->json([
-                'status'=>'error',
-                'message'=>'Error! Some problem has occurred'
-            ]);
+        } else {
+            if ($sub_category->delete()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Sub Category Deleted Successfully!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Error! Some problem has occurred'
+                ]);
+            }
+        }
+    }
+
+    public function getSubCategoryByCategoryId(Category $category)
+    {
+        $sub_categories = SubCategory::where('category_id', $category->id)->get();
+        foreach ($sub_categories as $sub_category) {
+            echo "<option value='" . $sub_category->id . "'>" . $sub_category->name . "</option>";
         }
     }
 }

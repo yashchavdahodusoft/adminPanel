@@ -2,10 +2,10 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Category</h4>
+                <h4 class="card-title">Slider</h4>
                 <div class="d-flex justify-content-end">
                     <button onclick="createRecord(this)" class="btn btn-primary"
-                        data-url="{{ route('category.create') }}">Add Record
+                        data-url="{{ route('slider.create') }}">Add Record
                         +</button>
                 </div>
                 <div class="table-responsive">
@@ -13,23 +13,23 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
+                                <th>Image</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $key => $category)
+                            @foreach ($data as $key => $slider)
                                 <tr>
-                                    <td>{{ $category->id }}</td>
-                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $slider->id }}</td>
+                                    <td><img src="{{asset('storage/'.$slider->image)}}" alt="image"></td>
                                     <td>
                                         <a href="javascript:void(0)" onclick="editRecord(this)"
-                                            data-url="{{ route('category.edit', $category) }}"
+                                            data-url="{{ route('slider.edit', $slider) }}"
                                             class="btn btn-inverse-primary btn-rounded btn-icon">
                                             <i class="mdi mdi-pencil"></i>
                                         </a>
                                         <button onclick="removeRecord(this)" data-token="{{ csrf_token() }}"
-                                            data-url="{{ route('category.destroy', $category) }}"
+                                            data-url="{{ route('slider.destroy', $slider) }}"
                                             class="btn btn-inverse-danger btn-rounded btn-icon">
                                             <i class="mdi mdi-close"></i>
                                         </button>
