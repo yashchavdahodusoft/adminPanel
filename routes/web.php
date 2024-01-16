@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CodeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SliderController;
@@ -31,9 +32,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('tables', [DashboardController::class, 'tables'])->name('tables');
     Route::resource('category',CategoryController::class);
     Route::resource('sub-category',SubCategoryController::class);
-    Route::get('sub-category/getSubCategoryByCategoryId/{category}',[SubCategoryController::class,'getSubCategoryByCategoryId']);
+    Route::get('sub-category/getSubCategoryByCategoryId/{category}',[SubCategoryController::class,'getSubCategoryByCategoryId'])->name('getSubCategoryByCatgoryId');
     Route::resource('post',PostController::class);
     Route::resource('slider',SliderController::class);
     Route::post('ckeditor/upload',[PostController::class,'uploadImageFormCkEditor'])->name('ckeditor.upload');
+    Route::get('code-section',[PostController::class,'createCodeSection'])->name('create.code.section');
+    Route::delete('code/{code}',[CodeController::class,'destroy'])->name('code.delete');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });

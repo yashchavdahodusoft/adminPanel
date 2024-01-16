@@ -16,8 +16,7 @@
                 <td>{{ $post->category->name }}</td>
                 <td>{{ $post->sub_category->name }}</td>
                 <td>
-                    <a href="javascript:void(0)" onclick="editRecord(this)"
-                        data-url="{{ route('post.edit', $post) }}"
+                    <a href="{{ route('post.edit', $post) }}"
                         class="btn btn-inverse-primary btn-rounded btn-icon">
                         <i class="mdi mdi-pencil"></i>
                     </a>

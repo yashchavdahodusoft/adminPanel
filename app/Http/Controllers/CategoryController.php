@@ -27,14 +27,18 @@ class CategoryController extends Controller
         return view('category.create');
     }
 
+    public function validateData(Request $request){
+       
+        return $request->validate([
+            'name'=>'required|max:255'
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name'=>'required|max:255'
-        ]);
+        $data = $this->validateData($request);
         Category::create($data);
         return response()->json([
             'status'=>'success',
@@ -63,9 +67,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $data = $request->validate([
-            'name'=>'required|max:255'
-        ]);
+
+        $data = $this->validateData($request);
+       // return $request->only('name');
         $category->update($data);
         return response()->json([
             'status'=>'success',

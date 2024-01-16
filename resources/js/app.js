@@ -1,3 +1,3 @@
 import './bootstrap';
-import { SimpleUploadAdapter } from '@ckeditor/ckeditor5-upload';
+const ClassicEditor  = require('./editor.js');
 

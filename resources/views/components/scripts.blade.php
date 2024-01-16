@@ -47,7 +47,11 @@
                 dataLoad(page);
             });
 
-
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         });
 
         $(window).on('hashchange', function() {
@@ -108,6 +112,11 @@
                     } else if (response.status === 'error') {
                         notyf.error(response.message);
                     }
+                },
+                error: function(response) {
+                    if (response.status == 422) {
+                        showValidationErrors(response);
+                    }
                 }
             });
         }
@@ -144,6 +153,10 @@
                     } else if (response.status === 'error') {
                         notyf.error(response.message);
                     }
+                }, error: function(response) {
+                    if (response.status == 422) {
+                        showValidationErrors(response);
+                    }
                 }
             });
         }
@@ -174,12 +187,22 @@
 
         function getSubCategories(catid) {
             $.ajax({
-                url: 'sub-category/getSubCategoryByCategoryId/' + catid,
+                url: "{{url('sub-category/getSubCategoryByCategoryId')}}/"+catid,
                 type: 'GET',
                 dataType: 'html',
                 success: function(response) {
                     $('#sub_category_id').html(response);
                 }
+            });
+        }
+
+        function showValidationErrors(response) {
+            var errors = response.responseJSON.errors;
+            $('*').filter(':input').each(function() {
+                $('#error_' + this.id).html('');
+            });
+            $.each(errors, function(i, item) {
+                $('#error_' + i).html(item);
             });
         }
     </script>

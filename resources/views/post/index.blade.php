@@ -4,9 +4,9 @@
             <div class="card-body">
                 <h4 class="card-title">Posts</h4>
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary"><a class="text-decoration-none text-white" href="{{ route('post.create') }}">Add
+                    <a class="text-decoration-none text-white" href="{{ route('post.create') }}"><button class="btn btn-primary">Add
                         Record
-                        +</a></button>
+                        +</button></a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -27,8 +27,8 @@
                                     <td>{{ $post->category->name }}</td>
                                     <td>{{ $post->sub_category->name }}</td>
                                     <td>
-                                        <a href="javascript:void(0)" onclick="editRecord(this)"
-                                            data-url="{{ route('post.edit', $post) }}"
+                                        <a 
+                                           href="{{ route('post.edit', $post) }}"
                                             class="btn btn-inverse-primary btn-rounded btn-icon">
                                             <i class="mdi mdi-pencil"></i>
                                         </a>
@@ -51,5 +51,6 @@
             </div>
         </div>
     </div>
-
+    
+    
 </x-layout-app>

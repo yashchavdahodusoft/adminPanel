@@ -4,6 +4,7 @@
             <div class="card-body">
                 <h4 class="card-title">Category</h4>
                 <div class="d-flex justify-content-end">
+                    {{-- createRecord(this) --}}
                     <button onclick="createRecord(this)" class="btn btn-primary"
                         data-url="{{ route('category.create') }}">Add Record
                         +</button>
