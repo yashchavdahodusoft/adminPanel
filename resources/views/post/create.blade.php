@@ -1,14 +1,19 @@
 <x-layout-app>
+    <style>
+        .ck.ck-content {
+            height: 50vh;
+        }
+
+        .ck-balloon-panel {
+            z-index: 9999 !important
+        }
+    </style>
+    <x-head title="Create Post"></x-head>
     <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/addon/edit/matchbrackets.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/mode/javascript/javascript.min.js"></script>
-    <style>
-        .highlight {
-            color: blue;
-        }
-    </style>
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
 
@@ -75,9 +80,7 @@
                     </div>
 
                     <div class="row p-3 rounded" id="createCode" style="background-color:#0000001A;">
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary" type="button" onclick="addCodeSection()">Remove</button>
-                        </div>
+                        
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="code_title_{{$row_id}}">Code Title</label>

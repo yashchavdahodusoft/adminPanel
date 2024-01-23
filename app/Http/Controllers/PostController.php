@@ -70,9 +70,10 @@ class PostController extends Controller
             $values['title'] = $row['code_title_' . $code_key] ?? '';
             $values['language'] = $row['code_language_' . $code_key] ?? '';
             $values['description'] = $row['code_description_' . $code_key] ?? '';
+            $row['code_content_' . $code_key] = trim($row['code_content_' . $code_key]);
             $values['content'] = $row['code_content_' . $code_key] ?? '';
             // print_r($row);
-            if ($values['title'] != '' && $values['language'] != '' && $values['description'] != '' && $values['content'] != '') {
+            if ($values['title'] != '' || $values['language'] != '' || $values['description'] != '' || $values['content'] != '') {
                 $post->codes()->create($values);
             }
         }
@@ -86,9 +87,10 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        $codes = $post->codes;
+        return view('post.show',compact('post','codes'));
     }
 
     /**
@@ -140,10 +142,11 @@ class PostController extends Controller
             $values['title'] = $row['code_title_' . $code_key] ?? '';
             $values['language'] = $row['code_language_' . $code_key] ?? '';
             $values['description'] = $row['code_description_' . $code_key] ?? '';
+            $row['code_content_' . $code_key] = trim($row['code_content_' . $code_key]);
             $values['content'] = $row['code_content_' . $code_key] ?? '';
             $values['code_id'] = $row['code_id_' . $code_key] ?? '';
 
-            if ($values['title'] != '' && $values['language'] != '' && $values['description'] != '' && $values['content'] != '') {
+            if ($values['title'] != '' || $values['language'] != '' || $values['description'] != '' || $values['content'] != '') {
                 if (!empty($values['code_id'])) {
                     $code = Code::findOrFail($values['code_id']);
                     $code->update($values);

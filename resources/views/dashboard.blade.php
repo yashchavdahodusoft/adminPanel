@@ -1,4 +1,5 @@
 <x-layout-app>
+    <x-head title="Dashboard"></x-head>
     @if ($message = Session::get('message'))
         <div class="alert alert-success">
             {{ $message }}

@@ -1,4 +1,5 @@
 <x-layout-app>
+    <x-head title="Catagory"></x-head>
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">

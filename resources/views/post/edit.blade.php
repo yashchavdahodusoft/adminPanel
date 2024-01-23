@@ -1,14 +1,21 @@
 <x-layout-app>
+    <x-head title="Edit Post {{ $post->title }}">
+        <style>
+            .ck.ck-content {
+                height: 50vh;
+            }
+
+            .ck-balloon-panel {
+                z-index: 9999 !important
+            }
+        </style>
+    </x-head>
     <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/addon/edit/matchbrackets.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/mode/javascript/javascript.min.js"></script>
-    <style>
-        .highlight {
-            color: blue;
-        }
-    </style>
+
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
 
@@ -31,7 +38,8 @@
                         <div class="col-12">
                             <div class="mb-3">
                                 <label for="image">Slider Image</label>
-                                <input type="file" name="image" id="image" accept="image/*" class="form-control h-25">
+                                <input type="file" name="image" id="image" accept="image/*"
+                                    class="form-control h-25">
                             </div>
                         </div>
                     </div>
@@ -82,51 +90,7 @@
                         <h5 class="card-title">Code Section</h5>
 
                     </div>
-                    <div class="row p-3 rounded" id="createCode" style="background-color:#0000001A;">
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary" type="button" onclick="addCodeSection()">Add Block</button>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="code_title_{{ $row_id }}">Code Title</label>
-                                <input type="text" name="code_title_{{ $row_id }}"
-                                    id="code_title_{{ $row_id }}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="code_language_{{ $row_id }}">Code Language</label>
-                                <select name="code_language_{{ $row_id }}"
-                                    id="code_language_{{ $row_id }}" class="form-control form-select"
-                                    onchange="">
-                                    <option selected disabled>Select Language</option>
-                                    <option value="html">Html</option>
-                                    <option value="css">Css</option>
-                                    <option value="javascript">Js</option>
-                                    <option value="php">Php</option>
-                                    <option value="java">Java</option>
-                                    <option value="python">Python</option>
-                                    <option value="ruby">Ruby</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="mb-3">
-                                <label for="code_description_{{ $row_id }}">Code Description</label>
-                                <textarea class="form-control" name="code_description_{{ $row_id }}"
-                                    id="code_description_{{ $row_id }}" cols="30"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="mb-3">
-                                <label for="code_content_{{ $row_id }}">Code</label>
-                                <textarea required name="code_content_{{ $row_id }}" class="codeInput form-control"
-                                    id="code_content_{{ $row_id }}"></textarea>
-                                <input type="hidden" name="code_key_{{ $row_id }}"
-                                    value="{{ $row_id }}">
-                            </div>
-                        </div>
-                    </div>
+
                     @foreach ($codes as $code)
                         @php
                             $rowUniqId = uniqid($code->id);
@@ -135,7 +99,8 @@
                             <div class="row p-3 rounded" id="createCode" style="background-color:#0000001A;">
                                 <div class="d-flex justify-content-end">
                                     <button class="btn btn-danger" type="button"
-                                        onclick="deleteCodeRow('{{ $rowUniqId }}',this)" data-url="{{route('code.delete',$code)}}">Remove</button>
+                                        onclick="deleteCodeRow('{{ $rowUniqId }}',this)"
+                                        data-url="{{ route('code.delete', $code) }}">Remove</button>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -186,7 +151,8 @@
                                         <textarea name="code_content_{{ $rowUniqId }}" class="form-control" id="code_content_{{ $rowUniqId }}">{{ $code->content }}</textarea>
                                         <input type="hidden" name="code_key_{{ $rowUniqId }}"
                                             value="{{ $rowUniqId }}">
-                                            <input type="hidden" name="code_id_{{$rowUniqId}}" value="{{$code->id}}">
+                                        <input type="hidden" name="code_id_{{ $rowUniqId }}"
+                                            value="{{ $code->id }}">
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +170,52 @@
                             </script>
                         </div>
                     @endforeach
-                    
+                    <div class="row p-3 rounded" id="createCode" style="background-color:#0000001A;">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="button" onclick="addCodeSection()">Add
+                                Block</button>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="code_title_{{ $row_id }}">Code Title</label>
+                                <input type="text" name="code_title_{{ $row_id }}"
+                                    id="code_title_{{ $row_id }}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="code_language_{{ $row_id }}">Code Language</label>
+                                <select name="code_language_{{ $row_id }}"
+                                    id="code_language_{{ $row_id }}" class="form-control form-select"
+                                    onchange="">
+                                    <option selected disabled>Select Language</option>
+                                    <option value="html">Html</option>
+                                    <option value="css">Css</option>
+                                    <option value="javascript">Js</option>
+                                    <option value="php">Php</option>
+                                    <option value="java">Java</option>
+                                    <option value="python">Python</option>
+                                    <option value="ruby">Ruby</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="code_description_{{ $row_id }}">Code Description</label>
+                                <textarea class="form-control" name="code_description_{{ $row_id }}"
+                                    id="code_description_{{ $row_id }}" cols="30"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="code_content_{{ $row_id }}">Code</label>
+                                <textarea required name="code_content_{{ $row_id }}" class="codeInput form-control"
+                                    id="code_content_{{ $row_id }}"></textarea>
+                                <input type="hidden" name="code_key_{{ $row_id }}"
+                                    value="{{ $row_id }}">
+                            </div>
+                        </div>
+                    </div>
                     <div id="otherRows"></div>
 
                     <div class="mt-4 d-flex justify-content-between">
@@ -223,7 +234,7 @@
                 <div class="modal-footer">
                     <input type="hidden" id="row_number" value="1">
                     <button type="button" class="btn btn-primary" onclick="savePost(this)"
-                        data-url="{{ route('post.update',$post) }}">Save
+                        data-url="{{ route('post.update', $post) }}">Save
                     </button>
                 </div>
             </div>
@@ -231,102 +242,102 @@
 
         </div>
         {{-- <script type="text/javascript"> --}}
-            <x-custom-script>
+        <x-custom-script>
 
             ClassicEditor
-                .create(document.querySelector('#description'), {
-                    ckfinder: {
-                        uploadUrl: '{{ route('ckeditor.upload') . '?_token=' . csrf_token() }}',
-                    },
+            .create(document.querySelector('#description'), {
+            ckfinder: {
+            uploadUrl: '{{ route('ckeditor.upload') . '?_token=' . csrf_token() }}',
+            },
 
-                })
-                .then(editor => {
-                    editor.model.document.on('change', () => {
-                        const editorContent = editor.getData();
-                        $('#description').val(editorContent);
-                    });
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            })
+            .then(editor => {
+            editor.model.document.on('change', () => {
+            const editorContent = editor.getData();
+            $('#description').val(editorContent);
+            });
+            })
+            .catch(error => {
+            console.error(error);
+            });
 
             const codeInput_{{ $row_id }} = document.getElementById('code_content_{{ $row_id }}');
             const editor_{{ $row_id }} = CodeMirror.fromTextArea(codeInput_{{ $row_id }}, {
-                lineNumbers: true,
-                matchBrackets: true,
-                mode: 'javascript',
+            lineNumbers: true,
+            matchBrackets: true,
+            mode: 'javascript',
             });
 
             editor_{{ $row_id }}.on('change', function() {
-                $('#code_content_{{ $row_id }}').val(editor_{{ $row_id }}.getValue());
+            $('#code_content_{{ $row_id }}').val(editor_{{ $row_id }}.getValue());
             });
 
             const output = document.getElementById('output');
             const editor_output = CodeMirror.fromTextArea(output, {
-                lineNumbers: true,
-                matchBrackets: true,
-                mode: 'javascript',
+            lineNumbers: true,
+            matchBrackets: true,
+            mode: 'javascript',
             });
             editor_output.on('change',function(){
-                $('#output').val(editor_output.getValue());
+            $('#output').val(editor_output.getValue());
             });
             function addCodeSection() {
-                $.ajax({
-                    url: "{{ route('create.code.section') }}",
-                    dataType: 'html',
-                    success: function(html) {
-                        $('#otherRows').append(html);
-                    }
-                });
+            $.ajax({
+            url: "{{ route('create.code.section') }}",
+            dataType: 'html',
+            success: function(html) {
+            $('#otherRows').append(html);
+            }
+            });
             }
 
             function removeCodeRow(id) {
-                $('#row_'+id).remove();
+            $('#row_'+id).remove();
             }
 
             function savePost(btn) {
-                url = btn.dataset.url;
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: new FormData($('#saveForm')[0]),
-                    dataType: 'JSON',
-                    async: false,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        if (response.status === "success") {
-                            notyf.success(response.message);
-                           // location.reload();
+            url = btn.dataset.url;
+            $.ajax({
+            url: url,
+            type: 'POST',
+            data: new FormData($('#saveForm')[0]),
+            dataType: 'JSON',
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+            if (response.status === "success") {
+            notyf.success(response.message);
+            // location.reload();
 
-                        } else if (response.status === 'error') {
-                            notyf.error(response.message);
-                        }
-                    },
-                    error: function(response) {
-                        if (response.status == 422) {
-                            showValidationErrors(response);
-                        }
-                    }
-                });
+            } else if (response.status === 'error') {
+            notyf.error(response.message);
+            }
+            },
+            error: function(response) {
+            if (response.status == 422) {
+            showValidationErrors(response);
+            }
+            }
+            });
             }
             function deleteCodeRow(id,btn){
-                url = btn.dataset.url;
-                if(confirm()){
-                    $.ajax({
-                        url: url,
-                        method:'DELETE',
-                        success:function(response){
-                            if (response.status === "success") {
-                                notyf.success(response.message);
-                                $('#row_'+id).remove();
-                            }
-                        }
-                    });
-                }
+            url = btn.dataset.url;
+            if(confirm()){
+            $.ajax({
+            url: url,
+            method:'DELETE',
+            success:function(response){
+            if (response.status === "success") {
+            notyf.success(response.message);
+            $('#row_'+id).remove();
             }
-            </x-custom-script>
-            {{-- </script>  --}}
-                </div>
-             </x-layout-app>
+            }
+            });
+            }
+            }
+        </x-custom-script>
+        {{-- </script>  --}}
+    </div>
+</x-layout-app>

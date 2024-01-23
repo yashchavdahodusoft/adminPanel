@@ -16,6 +16,10 @@
                 <td>{{ $post->category->name }}</td>
                 <td>{{ $post->sub_category->name }}</td>
                 <td>
+                    <a href="{{ route('post.show', $post) }}" target="_blank" 
+                    class="btn btn-inverse-warning btn-rounded btn-icon" rel="noopener noreferrer">
+                        <i class="mdi mdi-eye"></i>
+                    </a>
                     <a href="{{ route('post.edit', $post) }}"
                         class="btn btn-inverse-primary btn-rounded btn-icon">
                         <i class="mdi mdi-pencil"></i>

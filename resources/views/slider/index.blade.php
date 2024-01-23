@@ -1,4 +1,5 @@
 <x-layout-app>
+    <x-head title="Slider Image"></x-head>
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -48,4 +49,5 @@
         </div>
     </div>
     <div id="modalDiv"></div> 
+    
 </x-layout-app>
