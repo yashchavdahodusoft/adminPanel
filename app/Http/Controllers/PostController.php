@@ -153,8 +153,8 @@ class PostController extends Controller
                 } else {
                     $post->codes()->create($values);
                 }
-            }
-        }
+            }   
+        }   
 
         return response()->json([
             'status' => 'success',
